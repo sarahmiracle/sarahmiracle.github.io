@@ -13,7 +13,7 @@ Enemy.prototype.initPos = function() {
     this.x = -100;
     this.row = (Math.floor(Math.random()*3) + 1);
     this.y = 83 * this.row;
-    this.speed = 50 + Math.floor(Math.random() * 600);
+    this.speed = 150 + Math.floor(Math.random() * 800);
 };
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -85,7 +85,7 @@ var player = new Player();
 var allEnemies = [];
 (function(){
     var i;
-    for(i = 0; i < 4; i++) {
+    for(i = 0; i < 5; i++) {
         allEnemies.push(new Enemy());
     }
 })();
