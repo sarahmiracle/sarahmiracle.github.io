@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <link rel="stylesheet" type="text/css" href="/graphgui/css/style.css">
+
+    <script src="/graphgui/js/lib/jquery_3.2.1.min.js"></script>
+
+    <script src="/graphgui/js/lib/cytoscape_3.1.2.min.js"></script>
+
+
+    <script src = "/graphgui/js/lib/extensions.js"></script>
+    <script src = "/graphgui/js/solver.js"></script>
+    <script src = "/graphgui/js/data.js"></script>
+    <script src = "/graphgui/js/view.js"></script>
+
+</head>
+<body>
+
+<div>
+    <label for="n1">n1</label><input id = "n1" name = "n1" type="number" value="4">
+    <label for="n2">n2</label><input id = "n2" name = "n2" type="number" value="5">
+    <button type="button" onclick="oct.new_graph()">Create</button>
+    <br/><br/>
+    <button type="button" onclick="oct.color()">Color</button>
+</div>
+
+<div id = "cy" ></div>
+
+<script src = "/graphgui/js/octopus.js"></script>
+
+
+</body>
+</html>
