@@ -14,7 +14,7 @@ Data.prototype.set_graph = function(n1,n2) {
     this.make_empty(n1,n2);
 };
 
-//-------------------------------------------edges manipulation-------------------------------------------//
+//-------------------------------------------make adjacency-------------------------------------------//
 Data.prototype.make_adjacency = function() {
     this.adjacency = [];
     var n = this.n1 + this.n2;
@@ -37,23 +37,45 @@ Data.prototype.make_adjacency = function() {
     return this.adjacency;
 };
 
+//-------------------------------------------change graph-------------------------------------------//
+Data.prototype.change_graph = function(transformed_bip)
+{
+    this.edges = transformed_bip.bipartite_matrix;
+    this.n1 = transformed_bip.V1.length;
+    this.n2 = transformed_bip.V2.length;
+    this.make_adjacency();
+};
 //-------------------------------------------edges manipulation-------------------------------------------//
 Data.prototype.make_empty = function(n1,n2) {
+    var i, j;
     this.edges = [];
-    for(var i = 0; i < n1; i++)
+    for(i = 0; i < n1; i++)
     {
         this.edges.push([]);
-        for(var  j = 0; j < n2; j++) this.edges[i].push(0);
+        for(j = 0; j < n2; j++) this.edges[i].push(0);
+    }
+
+    this.adjacency = [];
+    var n = n1 + n2;
+    for(i = 0; i < n; i++)
+    {
+        this.adjacency.push([]);
+        for(j = 0; j < n; j++) this.adjacency[i].push(0);
     }
 };
 
 Data.prototype.add_edge = function(node1, node2)
 {
     this.edges[node1-1][node2-this.n1-1] = 1;
+    this.adjacency[node1-1][node2-1] = 1;
+    this.adjacency[node2-1][node1-1] = 1;
+
 };
 
 Data.prototype.remove_edge = function(node1, node2)
 {
     this.edges[node1-1][node2-this.n1-1] = 0;
+    this.adjacency[node1-1][node2-1] = 0;
+    this.adjacency[node2-1][node1-1] = 0;
 };
 

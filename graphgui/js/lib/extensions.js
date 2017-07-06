@@ -20,6 +20,31 @@ var g6_decrypt = function (graph_g6) {
         }
     return adj;
 };
+
+
+var g6_encrypt = function(adj) {
+    var g6 = "";
+
+    var n = adj.length;
+    g6 += String.fromCharCode(n + 63);
+
+    var i1 = 0, tmp = 0;
+    for(var j = 1; j < n; j++)
+        for(var i = 0; i < j; i++){
+            tmp <<= 1;
+            tmp += adj[i][j];
+            if(++i1 == 6)
+            {
+                i1 = 0;
+                g6 += String.fromCharCode(63 + tmp);
+                tmp = 0;
+            }
+        }
+    if(i1 > 0) g6 += String.fromCharCode(63 + tmp);
+
+    return g6;
+};
+
 var adjacency2bimatrix = function(adjacency)
 {
     var n = adjacency.length;
@@ -65,8 +90,8 @@ var matrix_normalize_min = function(matrix){
         for(var j = 0; j < m; j++)
             if(matrix[i][j]!=0) mi = Math.min(mi,matrix[i][j]);
 
-    for(var i = 0; i < n; i++)
-        for(var j = 0; j < m; j++)
+    for(i = 0; i < n; i++)
+        for(j = 0; j < m; j++)
             if(matrix[i][j]!=0) matrix[i][j] -= (mi-1);
 
     return matrix;
@@ -86,7 +111,7 @@ var matrix_copy = function(matrix)
         }
     }
     return ret;
-}
+};
 
 var matrix_swap_row = function(matrix, n1, n2)
 {

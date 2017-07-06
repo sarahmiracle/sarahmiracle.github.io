@@ -136,13 +136,7 @@ View.prototype.cy_functionality = function(sizes, octapi) {
                     id: "e" + down + up, //en11n75
                     source: down,
                     target: up
-                }/*, style:
-                 {
-                 "source-label" : up.substr(1),
-                 "source-text-offset": 100,
-                 "target-label" : down.substr(1),
-                 "target-text-offset": 100
-                 }*/
+                }
             });
 
             octapi.add_edge(down, up);
@@ -161,45 +155,58 @@ View.prototype.cy_functionality = function(sizes, octapi) {
 };
 
 
-View.prototype.show_coloring = function(coloring, V1, V2)
+View.prototype.show_coloring = function(coloring, V1, V2) // (bi_matrix, "no_label","new_nodes")
 {
 
-    this.cy.remove(this.cy.edges());
     var n1 = coloring.length;
     var n2 = coloring[0].length;
 
     this.sizes.n1 = n1;
     this.sizes.n2 = n2;
 
+
+    if(V2 == "new_nodes")
+    {
+        V2 = undefined;
+        this.update(n1,n2);
+    }
+    else
+    {
+        this.cy.remove(this.cy.edges());
+    }
+
+    var node1, node2;
     for(var i = 0; i < n1; i++)
         for(var j =0; j < n2; j++)
         {
             if(coloring[i][j]!=0)
             {
-                if(V1 === undefined)
+                if(V2 === undefined)
                 {
-                    var node1 = "n" + (i + 1);
-                    var node2 = "n" + (j + n1 + 1);
+                    node1 = "n" + (i + 1);
+                    node2 = "n" + (j + n1 + 1);
                 }
                 else
                 {
-                    var node1 = "n" + (V1[i] + 1);
-                    var node2 = "n" + (V2[j] + 1);
+                    node1 = "n" + (V1[i] + 1);
+                    node2 = "n" + (V2[j] + 1);
                 }
-                this.cy.add({
+
+                var edge = {
                     group: "edges",
                     data: {
                         id: "e" + node1 + node2, //en11n75
                         source: node1,
                         target: node2
-                    }, style:
-                     {
-                     "source-label" : coloring[i][j],
-                     "source-text-offset": 100,
-                     "target-label" : coloring[i][j],
-                     "target-text-offset": 100
-                     }
-                });
+                    }
+                };
+                if(V1 !== "no_label") edge.style = {
+                    "source-label" : coloring[i][j],
+                    "source-text-offset": 100,
+                    "target-label" : coloring[i][j],
+                    "target-text-offset": 100
+                };
+                this.cy.add(edge);
             }
 
         }
