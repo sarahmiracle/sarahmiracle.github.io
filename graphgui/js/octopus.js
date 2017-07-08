@@ -76,6 +76,12 @@ Octopus.prototype.new_graph = function() {
     n1 = parseInt(n1);
     n2 = parseInt(n2);
 
+    if(n1 + n2 > 60)
+    {
+        alert("the number of nodes must not exceed 40");
+        return;
+    }
+
     this.data.set_graph(n1,n2);
     console.log(n1);
     console.log(n2);
@@ -106,7 +112,7 @@ Octopus.prototype.load_g6 = function(){
         return;
     }
 
-    this.data.change_graph(transformed_bip);
+    this.data.change_graph(adj, transformed_bip);
     document.getElementById("n1").value = this.data.n1;
     document.getElementById("n2").value = this.data.n2;
 

@@ -37,13 +37,24 @@ Data.prototype.make_adjacency = function() {
     return this.adjacency;
 };
 
+//-------------------------------------------make edges-------------------------------------------//
+Data.prototype.make_bimatrix = function() {
+    this.edges = [];
+    for(var i = 0; i < this.n1; i++) {
+        this.edges.push([]);
+        for (var j = 0; j < this.n2; j++) {
+            this.edges[i].push(this.adjacency[i][j+this.n1]);
+        }
+    }
+    return this.edges;
+};
 //-------------------------------------------change graph-------------------------------------------//
-Data.prototype.change_graph = function(transformed_bip)
+Data.prototype.change_graph = function(adj, transformed_bip)
 {
-    this.edges = transformed_bip.bipartite_matrix;
+    this.adjacency = adj;
     this.n1 = transformed_bip.V1.length;
     this.n2 = transformed_bip.V2.length;
-    this.make_adjacency();
+    this.make_bimatrix();
 };
 //-------------------------------------------edges manipulation-------------------------------------------//
 Data.prototype.make_empty = function(n1,n2) {
